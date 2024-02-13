@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    command: sh -c "poetry install && poetry run python3 manage.py migrate && poetry run python3 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7.2.3
+
+  worker:
+    build: .
+    command: celery -A core worker -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - web
+      - redis
+
+  beat:
+    build: .
+    command: celery -A core beat -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - web
+      - redis

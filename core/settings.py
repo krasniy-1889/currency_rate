@@ -1,20 +1,18 @@
 import os
+from datetime import datetime
 from pathlib import Path
+
 from dotenv import load_dotenv
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -23,7 +21,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
+    "django_filters",
+    "rest_framework",
     "apps.currency",
+    "apps.user",
 ]
 
 MIDDLEWARE = [
@@ -80,9 +82,30 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "en-us"
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+]
 
-TIME_ZONE = "UTC"
+
+# REST
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 100,
+}
+
+# Auth
+AUTH_USER_MODEL = "user.CustomUser"
+
+# CELERY
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_TIMEZONE = "Europe/Moscow"
+
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
