@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "currency-rate"
+version = "0.1.0"
+description = ""
+authors = ["krasniy-1889 <neytirri@proton.me>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+djangorestframework = "^3.14.0"
+django-filter = "^23.5"
+django = "^5.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
