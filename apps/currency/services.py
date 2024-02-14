@@ -5,10 +5,10 @@ import httpx
 from .models import Currency
 
 
-def update_currency():
-    """Проверяет обновления курса за последние 3 дня"""
+def update_currency(days: int = 6):
+    """Проверяет обновления курса за последние дни"""
     current_date = datetime.now()
-    for _ in range(6):
+    for _ in range(days):
         current_date = current_date - timedelta(days=1)
         date_str = current_date.strftime("%Y/%m/%d")
         currency_date_exists = Currency.objects.filter(

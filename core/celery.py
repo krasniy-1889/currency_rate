@@ -23,6 +23,6 @@ app.conf.beat_schedule = {
     },
     "debug_task": {
         "task": "core.celery.debug_task",
-        "schedule": timedelta(seconds=5),
+        "schedule": timedelta(minutes=1),
     },
 }
